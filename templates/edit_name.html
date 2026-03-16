@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Gilded Page — Edit Name</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+  <div class="card">
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="logo">
+      <h1>The <em>Gilded</em> Page</h1>
+    </div>
+    <p class="tagline">Edit Your Name</p>
+    <div class="divider"><span>✒</span></div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <div class="field">
+        <label for="username">New Name</label>
+        <input type="text" id="username" name="username" placeholder="Your new name" required/>
+      </div>
+      <button type="submit" class="btn">Update Name</button>
+    </form>
+
+    <div class="footer-links">
+      <a href="{{ url_for('profile') }}">← Back to Profile</a>
+    </div>
+  </div>
+</body>
+</html>

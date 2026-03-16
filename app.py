@@ -88,6 +88,45 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+# ---------- CHANGE PASSWORD ----------
+@app.route('/change-password', methods=['GET', 'POST'])
+def change_password():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        current = request.form['current_password']
+        new = request.form['new_password']
+        conn = get_db()
+        user = conn.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],)).fetchone()
+        if user and check_password_hash(user['password'], current):
+            conn.execute('UPDATE users SET password = ? WHERE id = ?',
+                        (generate_password_hash(new), session['user_id']))
+            conn.commit()
+            conn.close()
+            flash('Password updated successfully.', 'success')
+            return redirect(url_for('profile'))
+        else:
+            conn.close()
+            flash('Current password is incorrect.', 'error')
+    return render_template('change_password.html')
+
+# ---------- EDIT NAME ----------
+@app.route('/edit-name', methods=['GET', 'POST'])
+def edit_name():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        new_name = request.form['username']
+        conn = get_db()
+        conn.execute('UPDATE users SET username = ? WHERE id = ?',
+                    (new_name, session['user_id']))
+        conn.commit()
+        conn.close()
+        session['username'] = new_name
+        flash('Name updated successfully.', 'success')
+        return redirect(url_for('profile'))
+    return render_template('edit_name.html')
+
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
