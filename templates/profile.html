@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Gilded Page — Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body class="inner-page">
+
+  <nav class="navbar">
+    <div class="nav-brand">The <em>Gilded</em> Page</div>
+    <div class="nav-links">
+      <a href="{{ url_for('dashboard') }}">Home</a>
+      <a href="{{ url_for('books') }}">Books</a>
+      <a href="{{ url_for('profile') }}" class="active">Profile</a>
+      <a href="{{ url_for('logout') }}" class="nav-logout">Leave</a>
+    </div>
+  </nav>
+
+  <div class="inner-container">
+
+    <div class="welcome-banner">
+      <h2>Your <em>Profile</em></h2>
+      <p>Your membership details and reading identity.</p>
+    </div>
+
+    <div class="profile-grid">
+
+      <div class="info-card profile-card">
+        <div class="avatar">{{ user['username'][0].upper() }}</div>
+        <h3>{{ user['username'] }}</h3>
+        <p class="profile-email">{{ user['email'] }}</p>
+        <span class="badge current-badge">Active Member</span>
+        <p class="joined">Member since {{ user['joined_date'][:10] }}</p>
+      </div>
+
+      <div class="info-card">
+        <h3>📚 Reading Summary</h3>
+        <div class="stat-row"><span>Books Completed</span><strong>12</strong></div>
+        <div class="stat-row"><span>Currently Reading</span><strong>1</strong></div>
+        <div class="stat-row"><span>Meetings Attended</span><strong>8</strong></div>
+        <div class="stat-row"><span>Votes Cast</span><strong>5</strong></div>
+      </div>
+
+      <div class="info-card">
+        <h3>🏅 Badges Earned</h3>
+        <div class="badges-list">
+          <div class="badge-item">📖 First Chapter — Joined the club</div>
+          <div class="badge-item">🔥 On a Roll — Read 5 books</div>
+          <div class="badge-item">🗳 Voice of the Club — Cast 5 votes</div>
+          <div class="badge-item">🤝 Regular — Attended 5 meetings</div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>⚙️ Account</h3>
+        <div class="account-actions">
+          <button class="btn-secondary">Change Password</button>
+          <button class="btn-secondary">Edit Name</button>
+          <a href="{{ url_for('logout') }}" class="btn-danger">Sign Out</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

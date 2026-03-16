@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Gilded Page — Books</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body class="inner-page">
+
+  <nav class="navbar">
+    <div class="nav-brand">The <em>Gilded</em> Page</div>
+    <div class="nav-links">
+      <a href="{{ url_for('dashboard') }}">Home</a>
+      <a href="{{ url_for('books') }}" class="active">Books</a>
+      <a href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('logout') }}" class="nav-logout">Leave</a>
+    </div>
+  </nav>
+
+  <div class="inner-container">
+
+    <div class="welcome-banner">
+      <h2>The <em>Reading List</em></h2>
+      <p>Our curated collection — past, present, and future reads.</p>
+    </div>
+
+    <div class="section-title">📖 Currently Reading</div>
+    <div class="books-grid">
+      <div class="book-card current">
+        <div class="book-cover">P&P</div>
+        <div class="book-info">
+          <h4>Pride and Prejudice</h4>
+          <p>Jane Austen</p>
+          <span class="badge current-badge">In Progress</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">🗳 Vote for Next Book</div>
+    <div class="books-grid">
+
+      <div class="book-card vote-card">
+        <div class="book-cover">1984</div>
+        <div class="book-info">
+          <h4>Nineteen Eighty-Four</h4>
+          <p>George Orwell</p>
+          <button class="vote-btn" onclick="vote(this)">Vote</button>
+        </div>
+      </div>
+
+      <div class="book-card vote-card">
+        <div class="book-cover">BNW</div>
+        <div class="book-info">
+          <h4>Brave New World</h4>
+          <p>Aldous Huxley</p>
+          <button class="vote-btn" onclick="vote(this)">Vote</button>
+        </div>
+      </div>
+
+      <div class="book-card vote-card">
+        <div class="book-cover">TGG</div>
+        <div class="book-info">
+          <h4>The Great Gatsby</h4>
+          <p>F. Scott Fitzgerald</p>
+          <button class="vote-btn" onclick="vote(this)">Vote</button>
+        </div>
+      </div>
+
+      <div class="book-card vote-card">
+        <div class="book-cover">JE</div>
+        <div class="book-info">
+          <h4>Jane Eyre</h4>
+          <p>Charlotte Brontë</p>
+          <button class="vote-btn" onclick="vote(this)">Vote</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-title">✅ Previously Read</div>
+    <div class="books-grid">
+
+      <div class="book-card done-card">
+        <div class="book-cover">GE</div>
+        <div class="book-info">
+          <h4>Great Expectations</h4>
+          <p>Charles Dickens</p>
+          <span class="badge done-badge">Completed</span>
+        </div>
+      </div>
+
+      <div class="book-card done-card">
+        <div class="book-cover">TKM</div>
+        <div class="book-info">
+          <h4>To Kill a Mockingbird</h4>
+          <p>Harper Lee</p>
+          <span class="badge done-badge">Completed</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function vote(btn) {
+      document.querySelectorAll('.vote-btn').forEach(b => {
+        b.textContent = 'Vote';
+        b.classList.remove('voted');
+      });
+      btn.textContent = '✓ Voted';
+      btn.classList.add('voted');
+    }
+  </script>
+
+</body>
+</html>

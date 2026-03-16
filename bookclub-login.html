@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Gilded Page — Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #f5ede0;
+      --parchment:#eddfc8;
+      --ink:      #1e1510;
+      --brown:    #5c3d1e;
+      --gold:     #b8873a;
+      --gold-lt:  #d4a85a;
+      --rust:     #8b3a1e;
+      --shadow:   rgba(30,21,16,0.18);
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #1a0f08;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(92,61,30,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(139,58,30,0.2) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'EB Garamond', serif;
+      padding: 2rem;
+    }
+
+    /* Floating book spines on sides */
+    .spine {
+      position: fixed;
+      bottom: 0;
+      width: 28px;
+      border-radius: 3px 3px 0 0;
+      opacity: 0.55;
+    }
+    .spine.left  { left: 4%; }
+    .spine.right { right: 4%; }
+
+    /* Main card */
+    .card {
+      background: var(--cream);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      border-radius: 2px;
+      width: 100%;
+      max-width: 440px;
+      padding: 3rem 3rem 2.5rem;
+      box-shadow:
+        0 0 0 1px rgba(184,135,58,0.3),
+        0 4px 6px var(--shadow),
+        0 20px 60px rgba(10,5,2,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+      position: relative;
+      animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Top gold rule */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-lt), var(--gold), transparent);
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* Ornamental divider */
+    .ornament {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.1rem;
+      letter-spacing: 0.5em;
+      margin-bottom: 1.6rem;
+      opacity: 0.8;
+      animation: rise 0.9s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 0.4rem;
+      animation: rise 0.9s 0.15s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .logo h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--ink);
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    .logo h1 em {
+      font-style: italic;
+      color: var(--brown);
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--brown);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      font-style: italic;
+      animation: rise 0.9s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+      animation: rise 0.9s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .divider::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .divider span {
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    /* Form */
+    .form { animation: rise 0.9s 0.3s cubic-bezier(0.16,1,0.3,1) both; }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 0.45rem;
+      font-family: 'EB Garamond', serif;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      background: var(--parchment);
+      border: 1px solid rgba(92,61,30,0.3);
+      border-radius: 2px;
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input::placeholder { color: rgba(92,61,30,0.45); }
+
+    input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,135,58,0.15);
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.6rem;
+      font-size: 0.85rem;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--brown);
+      cursor: pointer;
+    }
+
+    .remember input[type="checkbox"] {
+      accent-color: var(--gold);
+      width: 14px;
+      height: 14px;
+    }
+
+    .forgot {
+      color: var(--rust);
+      text-decoration: none;
+      font-style: italic;
+      transition: color 0.2s;
+    }
+    .forgot:hover { color: var(--gold); }
+
+    .btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--brown);
+      background-image: linear-gradient(135deg, var(--brown), #3d2510);
+      color: var(--cream);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(30,21,16,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(184,135,58,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(30,21,16,0.4); }
+    .btn:hover::after { opacity: 1; }
+    .btn:active { transform: translateY(0); }
+
+    .footer-links {
+      margin-top: 1.6rem;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--brown);
+      border-top: 1px solid rgba(92,61,30,0.2);
+      padding-top: 1.4rem;
+    }
+
+    .footer-links a {
+      color: var(--rust);
+      text-decoration: none;
+      font-style: italic;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .bottom-quote {
+      margin-top: 2rem;
+      text-align: center;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: rgba(245,237,224,0.35);
+      letter-spacing: 0.03em;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative book spines -->
+  <svg class="spine left" viewBox="0 0 28 320" height="320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="28" height="320" rx="3" fill="#3d2010"/>
+    <rect x="2" width="3" height="320" fill="rgba(184,135,58,0.4)"/>
+    <rect x="23" width="3" height="320" fill="rgba(184,135,58,0.2)"/>
+    <text x="14" y="200" font-family="serif" font-size="9" fill="rgba(184,135,58,0.6)" text-anchor="middle" transform="rotate(-90,14,160)">GREAT EXPECTATIONS</text>
+  </svg>
+  <svg class="spine right" viewBox="0 0 28 280" height="280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="28" height="280" rx="3" fill="#5c2a0e"/>
+    <rect x="2" width="3" height="280" fill="rgba(184,135,58,0.3)"/>
+    <rect x="23" width="3" height="280" fill="rgba(184,135,58,0.15)"/>
+    <text x="14" y="180" font-family="serif" font-size="9" fill="rgba(184,135,58,0.5)" text-anchor="middle" transform="rotate(-90,14,140)">JANE EYRE</text>
+  </svg>
+
+  <div class="card">
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="logo">
+      <h1>The <em>Gilded</em> Page</h1>
+    </div>
+    <p class="tagline">A Society of Readers</p>
+
+    <div class="divider"><span>✒</span></div>
+
+    <form class="form" onsubmit="handleLogin(event)">
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="your@email.com" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+      </div>
+
+      <div class="row">
+        <label class="remember">
+          <input type="checkbox" /> Keep me signed in
+        </label>
+        <a href="#" class="forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn">Open the Books</button>
+    </form>
+
+    <div class="footer-links">
+      Not yet a member? &nbsp;<a href="#">Request an Invitation</a>
+    </div>
+  </div>
+
+  <p class="bottom-quote">"A reader lives a thousand lives before he dies."<br>— George R.R. Martin</p>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn');
+      btn.textContent = 'Signing in…';
+      btn.style.opacity = '0.7';
+      setTimeout(() => {
+        btn.textContent = 'Open the Books';
+        btn.style.opacity = '1';
+        alert('Login successful! (This is a demo)');
+      }, 1400);
+    }
+  </script>
+</body>
+</html>

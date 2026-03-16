@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Gilded Page — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body class="inner-page">
+
+  <nav class="navbar">
+    <div class="nav-brand">The <em>Gilded</em> Page</div>
+    <div class="nav-links">
+      <a href="{{ url_for('dashboard') }}" class="active">Home</a>
+      <a href="{{ url_for('books') }}">Books</a>
+      <a href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('logout') }}" class="nav-logout">Leave</a>
+    </div>
+  </nav>
+
+  <div class="inner-container">
+
+    <div class="welcome-banner">
+      <h2>Welcome back, <em>{{ username }}</em> 👋</h2>
+      <p>The library is open. What shall we read today?</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="info-card">
+        <div class="info-card-icon">📖</div>
+        <h3>Current Read</h3>
+        <p class="book-title">Pride and Prejudice</p>
+        <p class="book-author">by Jane Austen</p>
+        <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+        <p class="progress-label">Chapter 18 of 30 — 60% complete</p>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">📅</div>
+        <h3>Next Meeting</h3>
+        <p class="meeting-date">Saturday, March 22</p>
+        <p class="meeting-time">3:00 PM — Reading Room B</p>
+        <p class="meeting-note">Topic: Themes of social class in Chapter 15–20</p>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">🏆</div>
+        <h3>Your Stats</h3>
+        <div class="stat-row"><span>Books Read</span><strong>12</strong></div>
+        <div class="stat-row"><span>Meetings Attended</span><strong>8</strong></div>
+        <div class="stat-row"><span>Member Since</span><strong>Jan 2026</strong></div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-icon">💬</div>
+        <h3>Latest Announcement</h3>
+        <p class="announcement">Our next book vote is open! Head to the Books page to cast your vote for March's read.</p>
+        <a href="{{ url_for('books') }}" class="card-link">Go to Books →</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
