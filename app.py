@@ -97,17 +97,18 @@ def change_password():
         current = request.form['current_password']
         new = request.form['new_password']
         conn = get_db()
-        user = conn.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],)).fetchone()
-        if user and check_password_hash(user['password'], current):
-            conn.execute('UPDATE users SET password = ? WHERE id = ?',
-                        (generate_password_hash(new), session['user_id']))
-            conn.commit()
+        try:
+            user = conn.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],)).fetchone()
+            if user and check_password_hash(user['password'], current):
+                conn.execute('UPDATE users SET password = ? WHERE id = ?',
+                            (generate_password_hash(new), session['user_id']))
+                conn.commit()
+                flash('Password updated successfully.', 'success')
+                return redirect(url_for('profile'))
+            else:
+                flash('Current password is incorrect.', 'error')
+        finally:
             conn.close()
-            flash('Password updated successfully.', 'success')
-            return redirect(url_for('profile'))
-        else:
-            conn.close()
-            flash('Current password is incorrect.', 'error')
     return render_template('change_password.html')
 
 # ---------- EDIT NAME ----------
@@ -118,13 +119,15 @@ def edit_name():
     if request.method == 'POST':
         new_name = request.form['username']
         conn = get_db()
-        conn.execute('UPDATE users SET username = ? WHERE id = ?',
-                    (new_name, session['user_id']))
-        conn.commit()
-        conn.close()
-        session['username'] = new_name
-        flash('Name updated successfully.', 'success')
-        return redirect(url_for('profile'))
+        try:
+            conn.execute('UPDATE users SET username = ? WHERE id = ?',
+                        (new_name, session['user_id']))
+            conn.commit()
+            session['username'] = new_name
+            flash('Name updated successfully.', 'success')
+            return redirect(url_for('profile'))
+        finally:
+            conn.close()
     return render_template('edit_name.html')
 
 if __name__ == '__main__':
